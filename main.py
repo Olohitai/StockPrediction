@@ -15,7 +15,7 @@ TODAY = date.today().strftime("%Y-%m-%d")
 st.title('Stock Forecast App')
 
 # List of stocks to choose from
-stocks = ('GOOG', 'AAPL', 'MSFT', 'GME')
+stocks = ('AMZN''NFLX''TSLA''JPM''JNJ''BRK.A','GOOG', 'AAPL', 'MSFT', 'GME')
 selected_stock = st.selectbox('Select dataset for prediction', stocks)
 
 # Slider to select number of years for prediction
