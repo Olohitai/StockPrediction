@@ -15,8 +15,10 @@ TODAY = date.today().strftime("%Y-%m-%d")
 st.title('Stock Forecast App')
 
 # List of stocks to choose from
-stocks = ('AMZN''NFLX''TSLA''JPM''JNJ''BRK.A','GOOG', 'AAPL', 'MSFT', 'GME')
+stocks = ('AMZN', 'NFLX', 'TSLA', 'JPM', 'JNJ', 'BRK.A','GOOG', 'AAPL', 'MSFT', 'GME')
 selected_stock = st.selectbox('Select dataset for prediction', stocks)
+
+time_based_forecast = st.selectbox('Select time-based forecasting:', ('Next day', 'Next week', 'Next month'))
 
 # Slider to select number of years for prediction
 n_years = st.slider('Years of prediction:', 1, 4)
@@ -55,7 +57,13 @@ df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
 
 m = Prophet()
 m.fit(df_train)
-future = m.make_future_dataframe(periods=period)
+if time_based_forecast == 'Next day':
+    future = m.make_future_dataframe(periods=1)
+elif time_based_forecast == 'Next week':
+    future = m.make_future_dataframe(periods=7)
+else:
+    future = m.make_future_dataframe(periods=30)
+
 forecast = m.predict(future)
 
 # Customization options
